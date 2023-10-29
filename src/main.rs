@@ -7,7 +7,7 @@ use chrono::{Timelike, Utc};
 
 
 fn main() {
-    let mut MY_HASH: HashMap<String, String> = HashMap::new();
+    let mut my_hash: HashMap<String, String> = HashMap::new();
     let mut counter: u32 = 1;
     loop {
         thread::sleep(time::Duration::from_millis(1000));
@@ -18,12 +18,13 @@ fn main() {
 
         let hash = run_and_add_to_hash_set();
         hash.iter().for_each(|h| {
-            MY_HASH.insert(h.clone(), str.clone());
+            my_hash.insert(h.clone(), str.clone());
         });
 
         if counter % 10 == 0 {
-            println!("{:?}", &MY_HASH);
-            write_to_file(&MY_HASH).unwrap();
+            println!("Connections so far: {:}", &my_hash.keys().len());
+            println!("{:?}", &my_hash);
+            write_to_file(&my_hash).unwrap();
         }
 
         counter += 1;
@@ -58,8 +59,8 @@ fn run_and_add_to_hash_set() -> Vec<String> {
         .unwrap();
     let output = awk.wait_with_output().unwrap();
     let str = String::from_utf8(output.stdout).unwrap();
-    let mut spl = str.split("\n");
-    let mut col: Vec<_> = spl.collect();
+    let spl = str.split("\n");
+    let col: Vec<_> = spl.collect();
     col.iter().for_each(|e| { //TODO: Simplify
         returnable_vector.push(String::from(*e));
     }
