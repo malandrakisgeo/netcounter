@@ -44,7 +44,7 @@ fn run_and_add_to_hash_set() -> Vec<String> {
         .stdout(Stdio::piped())
         .spawn()
         .unwrap();
-    let grep = Command::new("grep")
+    let grep = Command::new("grep") 
         .arg("Virtualbox")
         .stdin(Stdio::from(netstat.stdout.unwrap()))
         .stdout(Stdio::piped())
@@ -52,7 +52,7 @@ fn run_and_add_to_hash_set() -> Vec<String> {
         .unwrap();
     let awk = Command::new("awk")
         .arg(" { print $5, $1 } ")
-        .stdin(Stdio::from(grep.stdout.unwrap()))
+        .stdin(Stdio::from(grep.stdout.unwrap())) //Replace grep with netstat in the VM script
         .stdout(Stdio::piped())
         .spawn()
         .unwrap();
